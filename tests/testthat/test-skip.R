@@ -17,7 +17,11 @@ test_that("Skip env vars", {
 
   expect_skip_with_env(c("CI" = "true"), skip_on_ci())
   expect_skip_with_env(c("CI" = "false"), skip_on_ci(), NA)
-
+  expect_skip_with_env(c("JENKINS_HOME" = "/home"), skip_on_ci())
+  expect_skip_with_env(c("JENKINS_HOME" = ""), skip_on_ci(), NA)
+  expect_skip_with_env(c("bamboo_buildKey" = "test"), skip_on_ci())
+  expect_skip_with_env(c("bamboo_buildKey" = ""), skip_on_ci(), NA)
+  
   expect_skip_with_env(c("APPVEYOR" = "True"), skip_on_appveyor())
   expect_skip_with_env(c("APPVEYOR" = "False"), skip_on_appveyor(), NA)
 
