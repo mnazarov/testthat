@@ -30,8 +30,10 @@
 #' * `skip_on_covr()` skips when covr is running (using the `R_COVR` env var).
 #'
 #' * `skip_on_ci()` skips on continuous integration systems like GitHub Actions,
-#'    travis, and appveyor (using the `CI` env var). It supersedes the older
-#'    `skip_on_travis()` and `skip_on_appveyor()` functions.
+#'    Travis, CircleCI and AppVeyor (using the `CI` env var), Jenkins 
+#'    (using the `JENKINS_HOME` env var), Bamboo (using the `bamboo_buildKey`
+#'    env var). It supersedes the older `skip_on_travis()` and 
+#'    `skip_on_appveyor()` functions.
 #'
 #' * `skip_on_os()` skips on the specified operating system(s) ("windows",
 #'   "mac", "linux", or "solaris").
@@ -182,7 +184,9 @@ skip_on_ci <- function() {
 }
 
 on_ci <- function() {
- isTRUE(as.logical(Sys.getenv("CI")))
+  isTRUE(as.logical(Sys.getenv("CI"))) || 
+  isTRUE(as.logical(Sys.getenv("JENKINS_HOME"))) || 
+  isTRUE(as.logical(Sys.getenv("bamboo_buildKey")))
 }
 
 in_covr <- function() {
